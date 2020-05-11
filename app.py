@@ -92,6 +92,7 @@ def create_app():
                 "section": section,
                 "course":course,
                 "sem":sem,
+                "phone": infodict["Mobile No"],
                 "email": infodict["Domain Email ID"],
                 "passout":passout,
                 "picurl": picslink,
