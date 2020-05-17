@@ -1,1 +1,1 @@
-web: gunicorn wsgi:app
+web: gunicorn --worker-class gevent wsgi:app
