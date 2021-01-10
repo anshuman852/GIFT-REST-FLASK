@@ -68,7 +68,8 @@ def create_app():
             datatable="body > div.wrapper.row-offcanvas.row-offcanvas-left > aside.right-side > section > section.content.edusec-user-profile > div > div.col-lg-3.table-responsive.edusec-pf-border.no-padding.edusecArLangCss"
             infolist=((d(datatable)).text()).split("\n")
             ##Convert the list to a dict
-            infodict={infolist[i]: infolist[i+1] for i in range(0,len(infolist),2)}
+            print(infolist)
+            infodict={infolist[i]: infolist[i+1] for i in range(0,(len(infolist)-1),2)}
             course=infodict["Batch"].split()[0]
             section=d("#academic > div:nth-child(4) > div > div.col-md-8.col-xs-8.edusec-profile-text").text()
             passout=infodict["Batch"].split()[1].split("-")[0]
