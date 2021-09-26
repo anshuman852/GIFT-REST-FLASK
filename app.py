@@ -154,7 +154,7 @@ def create_app():
             fees_details_list=[]
             for i in range(len(fees_details_body_rows)):
                 fees_details_dict={
-                    camel(fees_details_keys[0].text.strip()):fees_details_body_rows[i].find_all('td')[0].text.strip(),
+                    "num":fees_details_body_rows[i].find_all('td')[0].text.strip(),
                     camel(fees_details_keys[1].text.strip()):fees_details_body_rows[i].find_all('td')[1].text.strip(),
                     camel(fees_details_keys[2].text.strip()):fees_details_body_rows[i].find_all('td')[2].text.strip(),
                     camel(fees_details_keys[3].text.strip()):fees_details_body_rows[i].find_all('td')[3].text.strip(),
@@ -167,7 +167,7 @@ def create_app():
             payment_history_list=[]
             for i in range(len(payment_history_body_rows)):
                 payment_history_dict={
-                    camel(payment_history_keys[0].text.strip()):payment_history_body_rows[i].find_all('td')[0].text.strip(),
+                    "num":payment_history_body_rows[i].find_all('td')[0].text.strip(),
                     camel(payment_history_keys[1].text.strip()):payment_history_body_rows[i].find_all('td')[1].text.strip(),
                     camel(payment_history_keys[2].text.strip()):payment_history_body_rows[i].find_all('td')[2].text.strip(),
                     camel(payment_history_keys[3].text.strip()):payment_history_body_rows[i].find_all('td')[3].text.strip(),
