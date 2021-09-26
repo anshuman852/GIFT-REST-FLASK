@@ -17,12 +17,18 @@ def camel(chars):
 
 def create_app():
     app = Flask(__name__)
-
-    @app.route('/', methods=["GET", "POST"])
+    @app.route('/student/data', methods=["GET", "POST"])
     def get_data():
+        if request.method == "POST":
+            body=request.get_json()
+            username=body["id"]
+            password=body["pass"]
+        else:
+            username = request.args.get("id", default=None, type=str)
+            password = request.args.get("pass", default=None, type=str)
+
         url = 'https://cms.gift.edu.in/index.php'
-        username = request.args.get("id", default=None, type=str)
-        password = request.args.get("pass", default=None, type=str)
+
         if not username or not password:
             return "Error BC",503
         s = requests.session()
