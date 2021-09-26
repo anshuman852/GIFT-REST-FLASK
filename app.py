@@ -8,7 +8,7 @@ from pyquery import PyQuery as pq
 import json
 import re
 from bs4 import BeautifulSoup
-
+from id_gen.id_generator import generate_id
 word_regex_pattern = re.compile("[^A-Za-z]+")
 
 def camel(chars):
@@ -73,7 +73,6 @@ def create_app():
             profile_image=info_soup.find("img",alt="User Image")['src']
             profile_image='https://cms.gift.edu.in'+profile_image
             basic_table_dict['profileImage']=profile_image
-
             # personal details
             personal_table=info_soup.find("div",class_="tab-pane",id="personal")
             personal_soup=BeautifulSoup(str(personal_table),'html.parser')
@@ -208,7 +207,8 @@ def create_app():
                 id_card_dict[camel(ok[0].text.strip())]=ok[-1].text.strip()
             id_card_dict['template']="https://cms.gift.edu.in/images/stu_i_card_template.jpg"
 
-
+            id_link=generate_id(id_card_dict['name'],id_card_dict['regdNo'],id_card_dict['branch'],id_card_dict['validity'],personal_table_dict['bloodgroup'],profile_image)
+            id_card_dict['idLink']=id_link
             final_dict=basic_table_dict
             final_dict['personal']=personal_table_dict
             final_dict['academic']=academic_table_dict
