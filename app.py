@@ -7,6 +7,8 @@ from flask import Flask, Response, request
 from pyquery import PyQuery as pq
 import json
 import re
+import markdown
+import markdown.extensions.fenced_code
 from bs4 import BeautifulSoup
 from id_gen.id_generator import generate_id
 word_regex_pattern = re.compile("[^A-Za-z]+")
@@ -17,6 +19,15 @@ def camel(chars):
 
 def create_app():
     app = Flask(__name__)
+    @app.route('/')
+    def index():
+        readme_file = open("README.md", "r")
+        md_template_string = markdown.markdown(
+        readme_file.read(), extensions=["fenced_code"]
+    )
+
+        return md_template_string
+
     @app.route('/student/data', methods=["GET", "POST"])
     def get_data():
         if request.method == "POST":
