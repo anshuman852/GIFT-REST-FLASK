@@ -3,7 +3,7 @@ import datetime
 import requests
 import sys
 import traceback
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 from pyquery import PyQuery as pq
 import json
 import re
@@ -234,7 +234,8 @@ def create_app():
             final_dict['fees']=fees_dict
             final_dict['attendance']=attendance_table_list
             final_dict['id_card']=id_card_dict
-            return json.dumps(final_dict)
+            #send json
+            return jsonify(final_dict)
         except:
             print(sys.exc_info()[0])
             traceback.print_exc()
