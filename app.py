@@ -19,6 +19,7 @@ def camel(chars):
 
 def create_app():
     app = Flask(__name__)
+    app.config['JSON_SORT_KEYS'] = False
     @app.route('/')
     def index():
         readme_file = open("README.md", "r")
@@ -41,7 +42,7 @@ def create_app():
         url = 'https://cms.gift.edu.in/index.php'
 
         if not username or not password:
-            return "Error BC",503
+            return "Please Pass usename and password",503
         s = requests.session()
         rget = s.get(url)
         csrfpass = rget.text.split('"csrf-token" content="')[1].split('"')[0]
