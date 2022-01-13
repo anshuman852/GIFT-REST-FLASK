@@ -24,6 +24,6 @@ soupsieve==2.2.1
 urllib3==1.26.7
 waitress==2.0.0
 Werkzeug==2.0.1
-pillow==8.3.2
+pillow==9.0.0
 pyupload
 markdown
