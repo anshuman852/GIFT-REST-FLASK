@@ -1,7 +1,10 @@
 from PIL import Image, ImageDraw, ImageFont
 import requests
 import os
-from pyupload.uploader.catbox import CatboxUploader
+from pysondb import db
+
+dbe=db.getDb("db.json")
+
 #download file
 def download_file(url):
     local_filename = url.split('/')[-1]
@@ -12,8 +15,27 @@ def download_file(url):
                 f.write(chunk)
     return local_filename
 
+def upload_telegraph(img):
+    url="https://telegra.ph/upload"
+    files={'file':open(img,'rb')}
+    r=requests.post(url,files=files)
+    if not r.ok:
+        return None
+    try:
+        data=r.json()[0]
+        
+        if "src" in data.keys():
+            return f"https://telegra.ph{data['src']}"
+        else:
+            return None
+    except:
+        return None
+
 
 def generate_id(name,regd,branch,validity,blood_group,image_url):
+    local_data=dbe.getByQuery({"regd":regd})
+    if local_data:
+        return local_data[0]["link"]
     file_name = download_file(image_url)
     image = Image.open('id_gen/bg.jpg')
     pic = Image.open(file_name)
@@ -43,7 +65,11 @@ def generate_id(name,regd,branch,validity,blood_group,image_url):
 
     draw.text((25, 183), blood_group, fill='#ffffff', font=font)
     image.save(f"{regd}.png")
-    link=CatboxUploader(f"{regd}.png").execute()
-    os.remove(f"{regd}.png")
-    os.remove(file_name)
+    link=upload_telegraph(f"{regd}.png")
+    ok=dbe.add({"regd":regd,"link":link})
+    try:
+        os.remove(file_name)
+        os.remove(f"{regd}.png")
+    except:
+        pass
     return link
